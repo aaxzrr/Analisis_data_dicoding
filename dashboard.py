@@ -46,19 +46,18 @@ if mode == 'Wind Rose Plot':
         cleaned_data['wd'] = pd.to_numeric(cleaned_data['wd'], errors='coerce')
 
         # Wind rose for PM10
-        fig, ax = plt.subplots(figsize=(8, 6), subplot_kw=dict(projection='windrose'))
-        ax.bar(cleaned_data['wd'], cleaned_data['PM10'], normed=True, 
-               opening=0.8, edgecolor='white')
-        ax.set_title('Wind Rose for PM10')
-        ax.set_legend()
-        st.pyplot(fig)
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 7), subplot_kw=dict(projection='windrose'))
 
-        # Wind rose for Wind Speed
-        fig, ax = plt.subplots(figsize=(8, 6), subplot_kw=dict(projection='windrose'))
-        ax.bar(cleaned_data['wd'], cleaned_data['WSPM'], normed=True, 
-               opening=0.8, edgecolor='white')
-        ax.set_title('Wind Rose for Wind Speed')
-        ax.set_legend()
+        ax1.bar(cleaned_data['wd'], cleaned_data['PM10'], normed=True, 
+                opening=0.8, edgecolor='white')
+        ax1.set_title('Wind Rose for PM10 at Station')
+        ax1.set_legend()
+
+        ax2.bar(cleaned_data['wd'], cleaned_data['WSPM'], normed=True, 
+                opening=0.8, edgecolor='white', cmap=plt.cm.cool)
+        ax2.set_title('Wind Rose for Wind Speed (WSPM) at Station')
+        ax2.set_legend()
+
         st.pyplot(fig)
 
 elif mode == 'Pollutant Distribution':
